@@ -65,9 +65,14 @@
     "              | +-- rodified flag in square brackets
     "              +-- full path to file in the buffer
 " }
+" Autocommands {
+    if has("autocmd")
+        autocmd FileType tex source ~/.vim/latex.vim
+    endif " has("autocmd")
 set textwidth=80
 set shiftwidth=4
 set expandtab
 set tabstop=4
 set tabpagemax=25
+set autoindent
 map <F3> :NERDTreeToggle<CR>
