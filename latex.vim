@@ -2,7 +2,6 @@
 setlocal ai et sta sw=2 sts=2                          
 " make german quotes easy
 inoremap <buffer> " "`"'<LEFT><LEFT>
-inoremap <buffer> "<RIGHT>
 " indentation...mostly copied from vim-latex suite
 setlocal indentexpr=GetTeXIndent()
 setlocal indentkeys+=},=\\item,=\\bibitem
