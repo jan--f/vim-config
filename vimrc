@@ -76,3 +76,11 @@ set tabstop=4
 set tabpagemax=25
 set autoindent
 map <F3> :NERDTreeToggle<CR>
+function ToggleRelNumber()
+    if &relativenumber
+        set number
+    else
+        set relativenumber
+    endif
+endf
+map <F4> :silent! call ToggleRelNumber()<CR>
