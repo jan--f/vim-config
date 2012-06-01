@@ -76,6 +76,7 @@ set expandtab
 set tabstop=4
 set tabpagemax=25
 set autoindent
+set autochdir
 map <F3> :NERDTreeToggle<CR>
 function ToggleRelNumber()
     if &relativenumber
