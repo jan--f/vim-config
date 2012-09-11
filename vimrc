@@ -86,6 +86,7 @@ function ToggleRelNumber()
     endif
 endf
 map <F4> :silent! call ToggleRelNumber()<CR>
+map <F5> :TagbarToggle<CR>
 " set font in gVim
 if has("gui_running")
   if has("gui_gtk2")
