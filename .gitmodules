@@ -34,3 +34,7 @@
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+	url = https://github.com/vim-scripts/vimwiki.git
+[submodule "bundle/vimwiki"]
+	path = bundle/vimwiki
+	url = https://github.com/vim-scripts/vimwiki.git

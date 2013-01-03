@@ -95,3 +95,6 @@ if has("gui_running")
     set guifont=Consolas:h11:cANSI
   endif
 endif
+set exrc
+" set note dir for vim-notes
+:let g:notes_directory = '~/.notes'
