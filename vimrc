@@ -69,6 +69,7 @@
 " Autocommands {
     if has("autocmd")
         autocmd FileType tex source ~/.vim/latex.vim
+        autocmd FileType erlang source ~/.vim/erlang.vim
     endif " has("autocmd")
 set textwidth=80
 set shiftwidth=4
@@ -98,3 +99,4 @@ endif
 set exrc
 " set note dir for vim-notes
 :let g:notes_directory = '~/.notes'
+
