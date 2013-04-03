@@ -10,9 +10,11 @@ do
     cd $dir
     git checkout master
     git pull
+    git checkout master
     cd -
 done
 cd ..
+
 # inform master repo of changes and commit them
 git submodule update
 git commit -am "Updated all submodules"
