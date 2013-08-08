@@ -1,8 +1,21 @@
 " Basics {
-    runtime bundle/vim-pathogen/autoload/pathogen.vim
-    call pathogen#infect()
-    call pathogen#helptags()
-    filetype plugin on
+    filetype off
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
+" My plugins (managed via vundle)
+    Bundle 'gmarik/vundle'
+    Bundle 'altercation/vim-colors-solarized'
+    Bundle 'msanders/snipmate'
+    Bundle 'tpope/vim-fugitive'
+    Bundle 'scrooloose/syntastic'
+    Bundle 'vim-scripts/vimwiki'
+    Bundle 'mileszs/ack.vim'
+    Bundle 'ervandew/supertab'
+    Bundle 'kien/ctrlp.vim'
+    Bundle 'tomtom/tcomment_vim'
+    Bundle 'hcs42/vim-erlang-runtime'
+
+    filetype plugin indent on
     syntax on " syntax highlighting on
     filetype indent on
     set noexrc " don't use local version of .(g)vimrc, .exrc
@@ -97,6 +110,4 @@ if has("gui_running")
   endif
 endif
 set exrc
-" set note dir for vim-notes
-:let g:notes_directory = '~/.notes'
 
