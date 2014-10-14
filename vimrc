@@ -1,26 +1,25 @@
+" =============================================================================
 " Basics {
-"    profile start syntastic.log
-"    profile! file */bundle/syntastic/*
+" =============================================================================
     filetype off
     set rtp+=~/.vim/bundle/vundle/
     call vundle#rc()
-" My plugins (managed via vundle)
     Bundle 'gmarik/vundle'
     Bundle 'altercation/vim-colors-solarized'
     Bundle 'tpope/vim-fugitive'
     Bundle 'scrooloose/syntastic'
     Bundle 'vim-scripts/vimwiki'
     Bundle 'mileszs/ack.vim'
-    Bundle 'kien/ctrlp.vim'
     Bundle 'tomtom/tcomment_vim'
     Bundle 'Raimondi/delimitMate'
     Bundle 'Shougo/neocomplete.vim'
     Bundle 'Shougo/neosnippet.vim'
     Bundle 'honza/vim-snippets'
     Bundle 'bling/vim-airline'
-    Bundle 'ntpeters/vim-better-whitespace'
     Bundle 'Rip-Rip/clang_complete'
     Bundle 'chazy/cscope_maps'
+    Bundle 'Shougo/unite.vim'
+    Bundle 'Shougo/vimproc.vim'
 
     filetype plugin indent on
     syntax on " syntax highlighting on
@@ -45,7 +44,9 @@
     "             +-- :read updates alternative file name
 " }
 
+" =============================================================================
 " Vim UI {
+" =============================================================================
     set pastetoggle=<F2> "<F2> toggles paste mode
     set cursorcolumn " highlight the current column
     set cursorline " highlight current line
@@ -71,51 +72,74 @@
     set showcmd " show the command being typed
     set showmatch " show matching brackets
     set sidescrolloff=10 " Keep 5 lines at the size
+    set noswapfile
+    set wildmenu " commandline autocompletion
+    set wildmode=longest,full
+    " mark overlong columns
+    set cc=90
+    " linebreak
+    set tw=100
+
+    set shiftwidth=4
+    set expandtab
+    set softtabstop=4
+
+    set tabpagemax=25
+    set autoindent
+    set encoding=utf8
+
+    function! ToggleRelNumber()
+        if &relativenumber
+            set number
+        else
+            set relativenumber
+        endif
+    endf
+    map <F4> :silent! call ToggleRelNumber()<CR>
+
+" }
+
+" =============================================================================
 " Autocommands {
-    if has("autocmd")
-        "autocmd FileType tex source ~/.vim/latex.vim
-        "autocmd FileType erlang source ~/.vim/erlang.vim
-    endif " has("autocmd")
+" =============================================================================
+    augroup MyAutoCmd
+      autocmd!
+    augroup END
+    " listchar=trail is not as flexible, use the below to highlight trailing
+    " whitespace. Don't do it for unite windows or readonly files
+    highlight ExtraWhitespace ctermbg=red guibg=red
+    match ExtraWhitespace /\s\+$/
+    augroup MyAutoCmd
+      autocmd BufWinEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+      autocmd InsertEnter * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+\%#\@<!$/ | endif
+      autocmd InsertLeave * if &modifiable && &ft!='unite' | match ExtraWhitespace /\s\+$/ | endif
+      autocmd BufWinLeave * if &modifiable && &ft!='unite' | call clearmatches() | endif
+    augroup END
+    autocmd MyAutoCmd BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc
+                \ so $MYVIMRC | if has('gui_running') | so $MYGVIMRC | endif
+" }
 
-" mark overlong columns
-set cc=90
-" linebreak
-set tw=100
-
-set shiftwidth=4
-set expandtab
-set softtabstop=4
-
-set tabpagemax=25
-set autoindent
-set encoding=utf8
-
-function ToggleRelNumber()
-    if &relativenumber
-        set number
-    else
-        set relativenumber
+" =============================================================================
+" Font {
+" =============================================================================
+    if has("gui_running")
+      if has("gui_gtk2")
+        set guifont=Inconsolata\ 12
+      elseif has("gui_win32")
+        set guifont=Consolas:h11:cANSI
+      endif
     endif
-endf
-map <F4> :silent! call ToggleRelNumber()<CR>
+" }
 
-" set font in gVim
-if has("gui_running")
-  if has("gui_gtk2")
-    set guifont=Inconsolata\ 12
-  elseif has("gui_win32")
-    set guifont=Consolas:h11:cANSI
-  endif
-endif
-set exrc
+" =============================================================================
+" Mappings {
+" =============================================================================
+    nnoremap <leader>ev :split $MYVIMRC<cr>
+" }
 
-nnoremap <leader>ev :split $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr>
-
-" Autocommands ================================================================
-
-
-"====== Neocomplete
+" =============================================================================
+" NeoComplete {
+" =============================================================================
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
@@ -123,7 +147,7 @@ let g:neocomplete#enable_smart_case = 1
 " Recommended key-mappings.
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
 imap <expr><CR> neosnippet#expandable() ?
 \ "\<Plug>(neosnippet_expand)" : "\<CR>"
@@ -150,4 +174,28 @@ let g:neocomplete#force_omni_input_patterns.cpp =
 "             \ '\[\h\w*\s\h\?\|\h\w*\%(\.\|->\)\|\h\w*::\w*'
 let g:clang_complete_auto = 0
 let g:clang_auto_select = 0
+" }
 
+" =============================================================================
+" Unite {
+" =============================================================================
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+nnoremap <leader>p :<C-u>Unite -buffer-name=files   -start-insert file_rec/async file<cr>
+nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
+nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
+
+autocmd MyAutoCmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+    nmap <buffer> <ESC> <Plug>(unite_insert_enter)
+    imap <buffer> <ESC> <Plug>(unite_exit)
+endfunction
+" }
+
+" =============================================================================
+" DelimitMate {
+" =============================================================================
+let delimitMate_expand_cr = 1
+au FileType c,cpp let b:delimitMate_eol_marker = ";"
+" }
