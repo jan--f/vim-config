@@ -20,6 +20,7 @@
     Bundle 'chazy/cscope_maps'
     Bundle 'Shougo/unite.vim'
     Bundle 'Shougo/vimproc.vim'
+    Bundle 'majutsushi/tagbar'
 
     filetype plugin indent on
     syntax on " syntax highlighting on
@@ -198,4 +199,10 @@ endfunction
 " =============================================================================
 let delimitMate_expand_cr = 1
 au FileType c,cpp let b:delimitMate_eol_marker = ";"
+" }
+
+" =============================================================================
+" Tagbar {
+" =============================================================================
+  nmap <F5> :TagbarToggle<CR>
 " }
