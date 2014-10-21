@@ -2,25 +2,26 @@
 " Basics {
 " =============================================================================
     filetype off
-    set rtp+=~/.vim/bundle/vundle/
-    call vundle#rc()
-    Bundle 'gmarik/vundle'
-    Bundle 'altercation/vim-colors-solarized'
-    Bundle 'tpope/vim-fugitive'
-    Bundle 'scrooloose/syntastic'
-    Bundle 'vim-scripts/vimwiki'
-    Bundle 'mileszs/ack.vim'
-    Bundle 'tomtom/tcomment_vim'
-    Bundle 'Raimondi/delimitMate'
-    Bundle 'Shougo/neocomplete.vim'
-    Bundle 'Shougo/neosnippet.vim'
-    Bundle 'honza/vim-snippets'
-    Bundle 'bling/vim-airline'
-    Bundle 'Rip-Rip/clang_complete'
-    Bundle 'chazy/cscope_maps'
-    Bundle 'Shougo/unite.vim'
-    Bundle 'Shougo/vimproc.vim'
-    Bundle 'majutsushi/tagbar'
+    set rtp+=~/.vim/bundle/Vundle.vim/
+    call vundle#begin()
+    Plugin 'gmarik/Vundle.vim'
+    Plugin 'altercation/vim-colors-solarized'
+    Plugin 'tpope/vim-fugitive'
+    Plugin 'scrooloose/syntastic'
+    Plugin 'vim-scripts/vimwiki'
+    Plugin 'mileszs/ack.vim'
+    Plugin 'tomtom/tcomment_vim'
+    Plugin 'Raimondi/delimitMate'
+    Plugin 'Shougo/neocomplete.vim'
+    Plugin 'Shougo/neosnippet.vim'
+    Plugin 'honza/vim-snippets'
+    Plugin 'bling/vim-airline'
+    Plugin 'Rip-Rip/clang_complete'
+    Plugin 'chazy/cscope_maps'
+    Plugin 'Shougo/unite.vim'
+    Plugin 'Shougo/vimproc.vim'
+    Plugin 'majutsushi/tagbar'
+    call vundle#end()
 
     filetype plugin indent on
     syntax on " syntax highlighting on
