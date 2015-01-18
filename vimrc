@@ -90,6 +90,7 @@
     set tabpagemax=25
     set autoindent
     set encoding=utf8
+    set breakindent
 
     function! ToggleRelNumber()
         if &relativenumber
@@ -223,3 +224,8 @@ let delimitMate_expand_cr = 2
 " =============================================================================
   nmap <F5> :TagbarToggle<CR>
 " }
+
+" =============================================================================
+" vimwiki {
+" =============================================================================
+let g:vimwiki_list = [{'path': '/mnt/jan/vimwiki'}]
