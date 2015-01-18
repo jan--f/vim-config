@@ -9,7 +9,7 @@
     Plugin 'tpope/vim-fugitive'
     Plugin 'scrooloose/syntastic'
     Plugin 'vim-scripts/vimwiki'
-    Plugin 'mileszs/ack.vim'
+    " Plugin 'mileszs/ack.vim'
     Plugin 'tomtom/tcomment_vim'
     Plugin 'Raimondi/delimitMate'
     Plugin 'Shougo/neocomplete.vim'
@@ -21,6 +21,7 @@
     Plugin 'Shougo/unite.vim'
     Plugin 'Shougo/vimproc.vim'
     Plugin 'majutsushi/tagbar'
+    Plugin 'tpope/vim-surround'
     call vundle#end()
 
     filetype plugin indent on
@@ -122,6 +123,17 @@
 " }
 
 " =============================================================================
+" Functions {
+" =============================================================================
+fun! StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
+command! StripTWS call StripTrailingWhitespaces()
+
+" =============================================================================
 " Font {
 " =============================================================================
     if has("gui_running")
@@ -137,6 +149,11 @@
 " Mappings {
 " =============================================================================
     nnoremap <leader>ev :split $MYVIMRC<cr>
+    cmap w!! w !sudo tee > /dev/null %
+    " change indentation settings
+    :nmap \i2 :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+    :nmap \i4 :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+    :nmap \i8 :set expandtab tabstop=8 shiftwidth=8 softtabstop=8<CR>
 " }
 
 " =============================================================================
@@ -151,10 +168,10 @@ let g:neocomplete#enable_smart_case = 1
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 " inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 
-imap <expr><CR> neosnippet#expandable() ?
-\ "\<Plug>(neosnippet_expand)" : "\<CR>"
-smap <expr><CR> neosnippet#expandable() ?
-\ "\<Plug>(neosnippet_expand)" : "\<CR>"
+" imap <expr><CR> neosnippet#expandable() ?
+" \ "\<Plug>(neosnippet_expand)" : "\<CR>"
+" smap <expr><CR> neosnippet#expandable() ?
+" \ "\<Plug>(neosnippet_expand)" : "\<CR>"
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " Enable snipMate compatibility feature.
@@ -198,8 +215,7 @@ endfunction
 " =============================================================================
 " DelimitMate {
 " =============================================================================
-let delimitMate_expand_cr = 1
-au FileType c,cpp let b:delimitMate_eol_marker = ";"
+let delimitMate_expand_cr = 2
 " }
 
 " =============================================================================
